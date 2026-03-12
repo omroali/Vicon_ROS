@@ -37,13 +37,11 @@ RUN apt-get update && \
     python3-rosdep python3-rosdep-modules && \
     rm -rf /var/lib/apt/lists/*
 
-# 2. Convenience CLI tools
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
     nano htop tmux net-tools tree && \
     rm -rf /var/lib/apt/lists/*
 
-# 3. Extra ROS debs used by your workspace
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
     ros-jazzy-launch-testing \
@@ -56,23 +54,18 @@ RUN apt-get update && \
     && \
     rm -rf /var/lib/apt/lists/*
 
-# 4. Deps used for CAN connection
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
     iproute2 can-utils && \
     rm -rf /var/lib/apt/lists/*
 
-# 5. Network debugging and optimization tools
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
     ethtool iperf3 iputils-ping tcpdump && \
     rm -rf /var/lib/apt/lists/*
 
-# 6. Initialize rosdep (as root before switching user)
 RUN rosdep init || true
 
-
-# 7. Python pip installs
 RUN python3 -m pip install --no-cache-dir --break-system-packages \
     tmule==1.5.9 \
     pyserial
@@ -86,8 +79,6 @@ RUN echo '[ -f $HOME/bash_scripts/bashrc_extensions.sh ] && \
     source $HOME/bash_scripts/bashrc_extensions.sh' \
     >> /home/${USERNAME}/.bashrc
 
-
-# Set Cyclone DDS as default middleware for better performance
 RUN echo 'export RMW_IMPLEMENTATION=rmw_cyclonedds_cpp' >> /home/${USERNAME}/.bashrc
 
 CMD ["bin/bash"]

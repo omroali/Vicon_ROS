@@ -16,11 +16,9 @@ services:
 
     # — Bind‑mount each git sub‑module into the workspace ————————————
     volumes:
-      - ../ros2_ws:/home/ros/base_ws/src/ros2_ws:rw
       - ../ros2-vicon-receiver/vicon_receiver:/home/ros/base_ws/src/vicon_receiver:rw
-
-      # Bash Scripts
       - ../bash_scripts/container:/home/ros/bash_scripts:rw
+      - ../configs:/home/ros/configs:rw
 
       # enable mount for gui applications
       - /tmp/.X11-unix:/tmp/.X11-unix:rw
