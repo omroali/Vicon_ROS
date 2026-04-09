@@ -11,6 +11,8 @@ services:
     network_mode: host # helps ROS 2 discovery (optional)
 
     privileged: true
+    runtime: nvidia
+
     devices:
       - /dev:/dev
 
@@ -19,11 +21,19 @@ services:
       - ../ros2-vicon-receiver/vicon_receiver:/home/ros/base_ws/src/vicon_receiver:rw
       - ../bash_scripts/container:/home/ros/bash_scripts:rw
       - ../configs:/home/ros/configs:rw
-
       # enable mount for gui applications
       - /tmp/.X11-unix:/tmp/.X11-unix:rw
+
+      - apt-cache:/var/cache/apt/archives
+      - apt-lists:/var/lib/apt/lists
 
     environment:
       - BASE_WS=/home/ros/base_ws
       - DISPLAY=:0
       - QT_X11_NO_MITSHM=1
+      - NVIDIA_VISIBLE_DEVICES=all
+      - NVIDIA_DRIVER_CAPABILITIES=all
+
+volumes:
+  apt-cache:
+  apt-lists:
