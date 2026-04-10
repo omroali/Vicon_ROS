@@ -1,9 +1,9 @@
 services:
-  ros2_jazzy:
+  ros2_vicon:
     build:
       context: .
       dockerfile: Dockerfile
-    image: ros2-jazzy # resulting image name
+    image: vicon_container
 
     stdin_open: true
     tty: true
